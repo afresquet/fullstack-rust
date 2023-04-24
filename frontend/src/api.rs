@@ -29,7 +29,7 @@ pub async fn api_create_feedback(feedback_data: &str) -> Result<Feedback, String
     }
 }
 
-pub async fn api_fetch_single_feedback(feedback_id: &str) -> Result<Feedback, String> {
+pub async fn _api_fetch_single_feedback(feedback_id: &str) -> Result<Feedback, String> {
     let response = match http::Request::get(
         format!("http://localhost:8000/api/feedbacks/{}", feedback_id).as_str(),
     )

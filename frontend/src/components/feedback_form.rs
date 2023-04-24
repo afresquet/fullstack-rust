@@ -40,24 +40,22 @@ pub fn FeedbackForm() -> Html {
     };
 
     let on_submit = {
-        let cloned_dispatch = dispatch.clone();
         let cloned_text_input_ref = text_input_ref.clone();
         let cloned_rating = rating.clone();
-        let cloned_text = text.clone();
         let message = message.clone();
 
         Callback::from(move |event: SubmitEvent| {
             let text_input_ref = cloned_text_input_ref.clone();
-            let text = cloned_text.clone();
+            let text = text.clone();
             let rating = cloned_rating.clone();
-            let dispatch = cloned_dispatch.clone();
+            let dispatch = dispatch.clone();
 
             event.prevent_default();
             set_loading(true, dispatch.clone());
 
             if text.trim().len() < *min {
                 message.set(Some("Text must be at least 10 characters".to_string()));
-                set_loading(false, dispatch.clone());
+                set_loading(false, dispatch);
                 return;
             }
 
@@ -83,7 +81,7 @@ pub fn FeedbackForm() -> Html {
                     }
                     Err(e) => {
                         set_loading(false, dispatch.clone());
-                        set_show_alert(e.to_string(), dispatch);
+                        set_show_alert(e, dispatch);
                     }
                 }
             });

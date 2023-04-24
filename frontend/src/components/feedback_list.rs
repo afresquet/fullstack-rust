@@ -14,7 +14,6 @@ pub fn FeedbackList() -> Html {
 
     use_effect_with_deps(
         move |_| {
-            let dispatch = dispatch.clone();
             wasm_bindgen_futures::spawn_local(async move {
                 set_loading(true, dispatch.clone());
                 let response = api_fetch_feedbacks((1, 10)).await;
@@ -25,7 +24,7 @@ pub fn FeedbackList() -> Html {
                     }
                     Err(e) => {
                         set_loading(false, dispatch.clone());
-                        set_show_alert(e.to_string(), dispatch);
+                        set_show_alert(e, dispatch);
                     }
                 }
             });

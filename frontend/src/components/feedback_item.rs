@@ -22,10 +22,10 @@ pub fn FeedbackItem(props: &Props) -> Html {
     let (_, dispatch) = use_store::<Store>();
 
     let on_delete = {
-        let cloned_dispatch = dispatch.clone();
-        let feedback_id = props.feedback.id.clone();
+        let feedback_id = props.feedback.id;
+
         Callback::from(move |_: MouseEvent| {
-            let dispatch = cloned_dispatch.clone();
+            let dispatch = dispatch.clone();
             let confirmed = confirm_delete("Do you really want to delete this item?");
 
             if confirmed {
@@ -43,7 +43,7 @@ pub fn FeedbackItem(props: &Props) -> Html {
                         }
                         Err(e) => {
                             set_loading(false, dispatch.clone());
-                            set_show_alert(e.to_string(), dispatch);
+                            set_show_alert(e, dispatch);
                         }
                     }
                 });
